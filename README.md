@@ -190,7 +190,8 @@ python postprocess.py data/test_predictions.jsonl answers.jsonl
 test-данные, справочник и pickle модели — train-данные ему не нужны.
 Если рядом со входным файлом есть свой `reference/`, подойдёт и он.
 
-Зависимости: scikit-learn, numpy. Работает на CPU, без интернета.
+Все зависимости — в `requirements.txt` (`pip install -r requirements.txt`).
+Работает на CPU, без интернета.
 
 Эксперименты и все числа — в `experiments/experiments.ipynb`: разведка
 (fail-analysis, quality-correlation, char-conf-threshold, cascade), MRZ

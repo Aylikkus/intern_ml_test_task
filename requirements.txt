@@ -1,0 +1,4 @@
+# Инференс и обучение постобработки. Версии зафиксированы: pickle модели
+# (model/ocr_error_classifier.pkl) должен загружаться той же версией sklearn.
+numpy==2.4.4
+scikit-learn==1.9.0
