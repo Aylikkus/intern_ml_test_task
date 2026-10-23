@@ -12,7 +12,7 @@ test_predictions.jsonl) и reference/subdivisions.csv — рядом со скр
 подойдёт (проверяется несколько вариантов расположения).
 Работает на CPU, без интернета. Зависимости: scikit-learn, numpy.
 
-Каскад (порог подобран на train, см. REPORT.txt):
+Каскад (порог подобран на train, см. README.md):
   C  min char_conf поля < 0.92                      -> reject
   M  у какого-то поля нет предсказания              -> reject
   Q  glare > 0.15 или sharpness < 125               -> reject
