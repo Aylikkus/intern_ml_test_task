@@ -1,10 +1,10 @@
 """Обучение классификатора OCR-ошибок для правила S каскада.
 
-Запуск (однократно, перед postprocess.py):
-    python train_model.py
+Запуск (однократно, перед postprocess.py; из корня репозитория):
+    python experiments/train_model.py
 
 Читает data/train_predictions.jsonl + data/train_labels.jsonl и
-reference/subdivisions.csv (рядом со скриптом), обучает HistGradientBoosting
+reference/subdivisions.csv из корня репозитория, обучает HistGradientBoosting
 на признаках errfeatures и сохраняет артефакт:
     model/ocr_error_classifier.pkl
 (модель + обученные триграммные LM + список признаков + метаданные).
@@ -28,13 +28,16 @@ from datetime import datetime
 import numpy as np
 from sklearn.ensemble import HistGradientBoostingClassifier
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)          # корень репозитория (postprocess.py, data/, model/)
+sys.path.insert(0, ROOT)
+sys.path.insert(0, os.path.join(ROOT, "lib"))
 import errfeatures
 import mrzlib
 import postprocess as pp
 from errfeatures import TEXT_FIELDS
 
-MODEL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "model")
+MODEL_DIR = os.path.join(ROOT, "model")
 MODEL_PATH = os.path.join(MODEL_DIR, "ocr_error_classifier.pkl")
 
 
@@ -59,8 +62,7 @@ def build_training_rows(records, builder):
 
 
 def main():
-    here = os.path.dirname(os.path.abspath(__file__))
-    data_dir = os.path.join(here, "data")
+    data_dir = os.path.join(ROOT, "data")
     train_records = list(zip(
         pp.load_jsonl(os.path.join(data_dir, "train_labels.jsonl")),
         pp.load_jsonl(os.path.join(data_dir, "train_predictions.jsonl"))))
@@ -71,7 +73,7 @@ def main():
         for field in TEXT_FIELDS:
             corpus[field].append(label_rec["fields"][field])
     extra_lexicon = {"Issue_organization_ru": []}
-    subdiv = os.path.join(here, "reference", "subdivisions.csv")
+    subdiv = os.path.join(ROOT, "reference", "subdivisions.csv")
     if os.path.exists(subdiv):
         with open(subdiv, encoding="utf-8") as fh:
             for row in csv.DictReader(fh):

@@ -177,22 +177,24 @@ OOF AUC 0.977 (по полям 0.93–0.99). Правило S: отказ, ес�
 ## 6. Как запустить
 
 ```bash
-python train_model.py        # обучение классификатора
+python experiments/train_model.py   # обучение классификатора
 python postprocess.py data/test_predictions.jsonl answers.jsonl
 ```
 
-Данные и справочник лежат в репозитории рядом со скриптами: `data/`
-(`train_predictions.jsonl`, `train_labels.jsonl`, `test_predictions.jsonl`)
-и `reference/subdivisions.csv`; рядом же должны лежать `mrzlib.py` и
-`errfeatures.py`. `postprocess.py` читает только test-данные, справочник
-и pickle модели — train-данные ему не нужны. Если рядом со входным файлом
-есть свой `reference/`, подойдёт и он.
+Структура репозитория: `postprocess.py`, `answers.jsonl` и `README.md` —
+в корне; библиотеки `mrzlib.py` и `errfeatures.py` — в `lib/`; обучение
+модели, `evaluate.py` и ноутбук с экспериментами — в `experiments/`;
+обученная модель — `model/ocr_error_classifier.pkl`; данные — `data/`
+(`train_predictions.jsonl`, `train_labels.jsonl`, `test_predictions.jsonl`),
+справочник — `reference/subdivisions.csv`. `postprocess.py` читает только
+test-данные, справочник и pickle модели — train-данные ему не нужны.
+Если рядом со входным файлом есть свой `reference/`, подойдёт и он.
 
 Зависимости: scikit-learn, numpy. Работает на CPU, без интернета.
 
-Эксперименты и все числа — в `experiments.ipynb`: разведка (fail-analysis,
-quality-correlation, char-conf-threshold, cascade), MRZ (mrz-*),
-классификатор (ocr-*, cascade-ml-*).
+Эксперименты и все числа — в `experiments/experiments.ipynb`: разведка
+(fail-analysis, quality-correlation, char-conf-threshold, cascade), MRZ
+(mrz-*), классификатор (ocr-*, cascade-ml-*).
 
 ## 7. Использование LLM
 
